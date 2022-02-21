@@ -1,34 +1,28 @@
-if (process.env.NODE_ENV !== "production") {
-    import dotenv from "dotenv";
-    dotenv.config();
-}
 import express from "express";
 import config from "./config.js";
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
-//Iniciamos preparando para test
-let _server;
-const server = {
-    start() {
-        const app = express()
+const app = express()
+config(app);
 
-        config(app);
+//temporal: rutas
+app.get("/", (req, res, next) => {
+    res.status(200).json({ probando: "ruta show/get" });
+});
 
-        _server = app.listen(PORT, () => {
-            if (process.env.NODE_ENV !== test) {
-                console.log(`Servidor abierto en ${PORT}`);
-            }
-        });
-    },
-    close() {
-        _server.close();
-    }
-}
+app.post("/", (req, res, next) => {
+    res.status(200).json({ probando: "ruta create/post" });
+});
 
-export default server;
+app.put("/", (req, res, next) => {
+    res.status(200).json({ probando: "ruta update/put" });
+});
 
-//parent deprecated!
-if(!module.parent) {
-    server.start();
-}
+app.delete("/", (req, res, next) => {
+    res.status(200).json({ probando: "ruta destroy/delete" });
+});
+
+app.listen(PORT, () => {
+     console.log(`Servidor abierto en ${PORT}`);
+});

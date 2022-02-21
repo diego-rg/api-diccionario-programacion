@@ -1,3 +1,4 @@
+import "dotenv/config"; //Importamos dotenv coa nova sintaxis
 import bodyParser from "body-parser"; //Extrae o body da request e déixaa en req.body para traballar con ela
 import logger from "morgan"; //Middleware logger que nos da información sobre as requests
 import cors from "cors";
@@ -5,9 +6,9 @@ import cors from "cors";
 export default app => {
     app.disable("x-powered-by"); //Para que non saia no navegador que estamos usando express, por seguridade
 
-    app.set("env", process.env.NODE_ENV);
+    app.set("env", process.env.ENV);
 
-    if (process.env.NODE_ENV !== "test") { //Se non estamos testeando, que use morgan co modo completo
+    if (process.env.ENV !== "test") { //Se non estamos testeando, que use morgan co modo completo
         app.use(logger("combined"));
     }
 

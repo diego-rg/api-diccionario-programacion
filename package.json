@@ -1,0 +1,9 @@
+{
+  "name": "api-diccionario-programacion",
+  "version": "1.0.0",
+  "description": "api rest con definiciones de términos de programación",
+  "main": "index.js",
+  "repository": "https://github.com/diego-rg/api-diccionario-programacion",
+  "author": "drg",
+  "license": "MIT"
+}

@@ -7,16 +7,16 @@ router.post("/", (termController.createTerm));
 
 router.get("/random", (termController.randomTerm));
 
-router.get("/search?query={query}", (termController.searchTerm));
+router.get("/all", (termController.allTerms));
 
 router.get("/categories", (termController.termCategories));
 
-router.get("/categories/:category", (termController.termCategory));
+router.get("/:category", (termController.termCategory));
 
 router
-    .get("/categories/:category/:name", (termController.termName))
-    .put("/categories/:category/:name", (termController.updateTerm))
-    .delete("/categories/:category/:name", (termController.destroyTerm));
+    .get("/:category/:name", (termController.termName))
+    .put("/:category/:name", (termController.updateTerm))
+    .delete("/:category/:name", (termController.destroyTerm));
 
 
 export default router;

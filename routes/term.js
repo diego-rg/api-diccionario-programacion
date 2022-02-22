@@ -1,29 +1,25 @@
 import express from "express";
 
+import termController from "../controllers/term.js";
+
 const router = express.Router();
 
-router.post("/", (req, res, next) => {
-    res.status(200).json({ probando: "ruta create term" });
-});
+router.post("/", (termController.createTerm));
 
-router.get("/random", (req, res, next) => {
-    res.status(200).json({ probando: "ruta show random term" });
-});
+router.get("/random", (termController.randomTerm));
 
-router.post("/search?query={query}", (req, res, next) => {
-    res.status(200).json({ probando: "ruta search term" });
-});
+router.post("/search?query={query}", (termController.searchTerm));
 
-router.get("/categories", (req, res, next) => {
-    res.status(200).json({ probando: "ruta show categories" });
-});
 
-router.get("/categories/:category", (req, res, next) => {
-    res.status(200).json({ probando: "ruta show all terms in a category" });
-});
+router.get("/categories", (termController.termCategories));
 
-router.get("/categories/:category/:name", (req, res, next) => {
-    res.status(200).json({ probando: "ruta show term by name" });
-});
+
+router.get("/categories/:category", (termController.termCategory));
+
+router
+    .get("/categories/:category/:name", (termController.termName))
+    .put("/categories/:category/:name", (termController.updateTerm))
+    .delete("/categories/:category/:name", (termController.destroyTerm));
+
 
 export default router;

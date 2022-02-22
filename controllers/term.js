@@ -22,23 +22,19 @@ async function createTerm (req, res, next) {
 async function randomTerm (req, res, next) {
     try {
         //Conta todos os term da db, selecciona un mediante un número aleatorio e devólveo se o econtra, senón devolve error
-        Term.count().exec(function (err, count) {
-            const randomTerm = Math.floor(Math.random() * count);
-            console.log(randomTerm)
-            Term.findOne().skip(randomTerm).exec(
-                function (err, random) {
-                    if(!randomTerm) {
-                        res.status(400).send({ msg: "No se han podido devolver un término aleatorio." });
-                    } else {
-                        res.status(200).send({ random });
-                    }
-                })
-        })
+        Term.aggregate([{ $sample: { size: 1 } }], function(err, random) {
+            if(!random) {
+                res.status(400).send({ msg: "No se han podido devolver un término aleatorio." });
+            } else {
+                res.status(200).send({ random });
+            }
+        });
     } catch (error) {
         res.status(500).send(error);
     }
 }
 
+//SHOW: todos
 async function allTerms (req, res, next) {
     try {
         //Buscámolos todos, usamos collation para ignorar mayus/minus e sort para alfabético
@@ -53,6 +49,7 @@ async function allTerms (req, res, next) {
     }
 }
 
+//SHOW: categorías
 async function termCategories (req, res, next) {
     const categories = (Term.schema.path('category').enumValues).sort();
     res.status(200).send({ categories });

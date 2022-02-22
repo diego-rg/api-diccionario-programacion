@@ -1,5 +1,4 @@
 import express from "express";
-
 import termController from "../controllers/term.js";
 
 const router = express.Router();
@@ -8,11 +7,9 @@ router.post("/", (termController.createTerm));
 
 router.get("/random", (termController.randomTerm));
 
-router.post("/search?query={query}", (termController.searchTerm));
-
+router.get("/search?query={query}", (termController.searchTerm));
 
 router.get("/categories", (termController.termCategories));
-
 
 router.get("/categories/:category", (termController.termCategory));
 

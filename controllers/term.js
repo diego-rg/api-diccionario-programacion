@@ -21,11 +21,12 @@ async function createTerm (req, res, next) {
 //SHOW: Get un término aleatorio
 async function randomTerm (req, res, next) {
     try {
-        //Conta todos os term da db, selecciona un mediante un número aleatorio e devólveo se o econtra, senón devolve error
-        Term.aggregate([{ $sample: { size: 1 } }], function(err, random) {
-            if(!random) {
+        //Selecciona unha mostra aleatoria
+        Term.aggregate([{ $sample: { size: 1 } }], function(err, result) {
+            if(!result) {
                 res.status(400).send({ msg: "No se han podido devolver un término aleatorio." });
             } else {
+                const random = result[0];//sacalo do array
                 res.status(200).send({ random });
             }
         });
@@ -55,12 +56,36 @@ async function termCategories (req, res, next) {
     res.status(200).send({ categories });
 }
 
+//SHOW: terms da categoría indicada
 async function termCategory (req, res, next) {
-    res.status(200).json({ probando: "ruta show all terms in a category" });
+    try {
+        const terms = await Term.find({ category: req.params.category }).collation({ locale: 'es', strength: 1 }).sort({ name: "asc" });
+        if(!terms) {
+            res.status(400).send({ msg: "No se han podido cargar los términos de la categoría indicada." });
+        } else if(terms.length === 0) {
+            res.status(400).send({ msg: "La categoría indicada no existe o no tiene términos actualmente." });
+        }else {
+            res.status(200).send({ terms });
+        }
+    } catch (error) {
+        res.status(500).send(error);
+    }
 }
 
+//show: term por nome
 async function termName (req, res, next) {
-    res.status(200).json({ probando: "ruta show term by name" });
+    try {
+        const term = await Term.find({ name: req.params.name }).collation({ locale: 'es', strength: 1 }).sort({ name: "asc" });
+        if(!term) {
+            res.status(400).send({ msg: "No se ha podido cargar el término especificado." });
+        } else if(term.length === 0) {
+            res.status(400).send({ msg: "El término no existe." });
+        }else {
+            res.status(200).send({ term });
+        }
+    } catch (error) {
+        res.status(500).send(error);
+    }
 }
 
 async function updateTerm (req, res, next) {

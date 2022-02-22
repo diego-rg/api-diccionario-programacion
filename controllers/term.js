@@ -1,5 +1,6 @@
 import Term from "../models/term.js"
 
+//CREATE: Crear un nuevo término
 async function createTerm (req, res, next) {
     const term = new Term();
     term.name = req.body.name;
@@ -17,17 +18,21 @@ async function createTerm (req, res, next) {
     }
 }
 
+//SHOW: Get un término aleatorio
 async function randomTerm (req, res, next) {
-    const term = new Term();
-    term.name = req.body.name;
-    term.definition = req.body.definition;
     try {
-        const termStore = await term.save();
-        if(!termStore) {
-            res.status(400).send({ msg: "No se ha podido guardar el término." });
-        } else {
-            res.status(200).send({ term: termStore });
-        }
+        //Conta todos os term da db, selecciona un mediante un número aleatorio e devólveo se o econtra, senón devolve error
+        Term.count().exec(function (err, count) {
+            const randomTerm = Math.floor(Math.random() * count);
+            Term.findOne().skip(randomTerm).exec(
+                function (err, result) {
+                    if(!randomTerm) {
+                        res.status(400).send({ msg: "No se han podido generar un término aleatorio" });
+                    } else {
+                        res.status(200).send({ result });
+                    }
+                })
+        })
     } catch (error) {
         res.status(500).send(error);
     }

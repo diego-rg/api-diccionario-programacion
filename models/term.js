@@ -22,7 +22,7 @@ const TermSchema = new Schema({
     }
 });
 
-//Definimos un index onde poñemos todos as key nas uqe uqeremos que busque logo o noso endpoint de search
-TermSchema.index({ name: "text", definition: "text", category: "text" });
+//Definimos un index onde poñemos todos as key(neste caso usamos $ para todas) nas uqe uqeremos que busque logo o noso endpoint de search
+TermSchema.index({"$**": "text"});
 
 export default mongoose.model("Term", TermSchema);

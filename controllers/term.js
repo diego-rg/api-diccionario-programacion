@@ -72,7 +72,7 @@ async function termCategory (req, res, next) {
     }
 }
 
-//show: term por nome
+//SHOW: term por nome
 async function termName (req, res, next) {
     try {
         const term = await Term.find({ name: req.params.name }).collation({ locale: 'es', strength: 1 }).sort({ name: "asc" });

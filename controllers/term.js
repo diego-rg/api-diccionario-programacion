@@ -89,12 +89,12 @@ async function termName (req, res, next) {
 }
 
 //UPDATE: modificar term con put
-//Ao querer facer a búsqueda por nome, primero hay que buscar o term e logo pasalo como condición
+//Ao querer facer a búsqueda por nome, primero hay que buscar o term e logo pasalo como condición. Usamos runValidators para que valide nome e category ao modificar
 async function updateTerm (req, res, next) {
     const findName = await Term.find({ name: req.params.name }).collation({ locale: 'es', strength: 1 });
     const newData = req.body;
     try {
-        const term = await Term.findByIdAndUpdate(findName, newData);
+        const term = await Term.findByIdAndUpdate(findName, newData, { runValidators: true });
         if(!term) {
             res.status(400).send({ msg: "No se ha podido modificar el término" });
         } else {
@@ -106,7 +106,16 @@ async function updateTerm (req, res, next) {
 }
 
 async function destroyTerm (req, res, next) {
-    res.status(200).json({ probando: "ruta destroy term" });
+    try {
+        const term = await Term.findOneAndDelete({ name: req.params.name });
+        if(!term) {
+            res.status(400).send({ msg: "No se ha podido eliminar la tarea" });
+        } else {
+            res.status(200).send({ msg: "Tarea eliminada correctamente" });
+        }
+    } catch (error) {
+        res.status(500).send(error);
+    }
 }
 
 export default { createTerm, randomTerm, allTerms, termCategories, termCategory, termName, updateTerm, destroyTerm }

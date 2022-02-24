@@ -17,7 +17,6 @@ async function searchWord (req, res, next) {
               }
             }
           ]);
-        console.log(req.query.q);
         if(!results) {
             res.status(400).send({ msg: "No se ha podido cargar el resultado de la búsqueda." });
         } else if(results.length === 0) {

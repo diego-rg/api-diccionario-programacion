@@ -24,3 +24,8 @@ mongoose.connect(urlDB, { useNewUrlParser: true, useUnifiedTopology: true }, (er
 const app = express()
 config(app);
 router(app);
+
+//Error 404 para TODOS os path que non existen (NON conta as ids, solo path base). Debe ir ao final. COn next pasa ao siguiente
+app.all("*", (req, res, next) => {
+    res.status(404).send({ msg: "La página indicada no existe." });
+});

@@ -3,7 +3,7 @@ import termController from "../controllers/term.js";
 
 const router = express.Router();
 
-router.post("/", (termController.createTerm));
+// router.post("/", (termController.createTerm));
 
 router.get("/random", (termController.randomTerm));
 
@@ -15,8 +15,10 @@ router.get("/:category", (termController.termCategory));
 
 router
     .get("/:category/:name", (termController.termName))
-    .put("/:category/:name", (termController.updateTerm))
-    .delete("/:category/:name", (termController.destroyTerm));
+    // .put("/:category/:name", (termController.updateTerm))
+    // .delete("/:category/:name", (termController.destroyTerm));
 
 
 export default router;
+
+//comentamos as que non queremos facer públicas para proba deploy

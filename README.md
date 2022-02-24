@@ -1,4 +1,5 @@
 # api-diccionario-programacion
+API REST con Express y MongoAtlas: diccionario con términos de programación. Contenido pendiente de añadir.
 https://api-diccionarioprogramacion.herokuapp.com/
 
 1. Término aleatorio:

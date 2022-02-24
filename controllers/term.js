@@ -105,6 +105,7 @@ async function updateTerm (req, res, next) {
     }
 }
 
+//DESTRY: delete term
 async function destroyTerm (req, res, next) {
     try {
         const term = await Term.findOneAndDelete({ name: req.params.name });

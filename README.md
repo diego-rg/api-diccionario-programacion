@@ -1,29 +1,3 @@
-
- 
-@diego-rg 
-diego-rg
-/
-api-diccionario-programacion
-Public
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-Merge branch 'main' of https://github.com/diego-rg/api-diccionario-pr…
-…ogramacion into deploy
- main
-@diego-rg
-diego-rg committed 7 minutes ago 
-2 parents 512659c + 923e366 commit 1615df68e8408f9ad51ffde2a61ba42bfaaccad5
-Showing 1 changed file with 40 additions and 0 deletions.
- 40  
-README.md
-@@ -0,0 +1,40 @@
 # api-diccionario-programacion
 API REST con Express y MongoAtlas: diccionario con términos de programación.
 https://api-diccionarioprogramacion.herokuapp.com/
